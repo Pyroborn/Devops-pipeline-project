@@ -52,7 +52,7 @@ $ git init
 $ git add .
 $ git commit -m "Initial commit"
 $ git branch -M <branch>
-$ git remote add origin https://gitlab.com/<username>/<project-name>.git
+$ git remote add origin https://gitlab.com/<username>/<project-name>.gi
 $ git push -u origin <branch>
 ```
 
