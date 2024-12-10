@@ -1,18 +1,13 @@
 pipeline {
     agent any
     stages {
-        stage('Test GitHub Access') {
+        stage('Clean-up and Check-out Stage') {
             steps {
                 script {
-                    echo 'Testing GitHub integration...'
-
-                    // Clean up any existing repository directory
-                    sh '''
-                    rm -rf Devops-pipeline-project
-                    git clone https://github.com/Pyroborn/Devops-pipeline-project.git
-                    cd Devops-pipeline-project
-                    git status
-                    '''
+                    echo 'Cleaning up and checking out.'
+                    deleteDir()
+                    checkout scm
+                    sh 'git status'
                 }
             }
         }
