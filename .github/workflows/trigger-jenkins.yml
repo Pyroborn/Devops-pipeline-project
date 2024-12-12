@@ -1,14 +1,17 @@
 name: Trigger Jenkins Pipeline
+
 on:
   push:
     branches:
-      -  master
+      - master
+
 jobs:
   trigger-jenkins:
     runs-on: ubuntu-latest
+    
     steps:
-      -  name: Trigger specific Jenkins Job
-         run: |
-           curl -X POST \
-           --url http://localhost:8080/job/My_Devops_Project/build \
-           --user Mert Can:114bd466657a180885964abdcb136774cf
+      - name: Trigger specific Jenkins Job
+        run: |
+          curl -X POST \
+          --url http://localhost:8080/job/My_Devops_Project/build \
+          --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}
