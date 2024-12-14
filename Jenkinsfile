@@ -25,5 +25,20 @@ pipeline {
                     }
                 }
             }
+        stage('Unit test via Vitest') {
+            steps {
+                script  {
+                    sh 'npm run test:unit'
+                }
+            }
+        }
+        stage('End-to-end test via Cypress') {
+            steps {
+                script {
+                    sh 'npm run test:e2e:dev'
+                }
+            }
+        }
+        
         }
 }
