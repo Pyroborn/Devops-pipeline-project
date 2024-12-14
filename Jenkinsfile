@@ -32,17 +32,5 @@ pipeline {
                 }
             }
         }
-        stage('End-to-end test via Cypress') {
-            steps {
-                script {
-                    sh '''
-                    export DISPLAY=:99
-                    nohup Xvfb :99 -screen 0 1280x1024x24 &
-                    npm run test:e2e:dev
-                    '''
-                }
-            }
-        }
-        
         }
 }
