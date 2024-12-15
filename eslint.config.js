@@ -18,7 +18,9 @@ export default [
   ...pluginVue.configs["flat/essential"], // Using Vue's essential configuration
   {
     files: ["cypress/**/*.js"],  // Apply these settings to Cypress test files
-    plugins: ["cypress"], // Use the Cypress plugin
+    plugins: {
+      cypress: pluginCypress, // Correctly define Cypress plugin here
+    },
     languageOptions: {
       globals: {
         ...globals.browser, // Browser globals
@@ -29,5 +31,10 @@ export default [
       // You can override or add specific rules for Cypress tests here
     },
   },
-  pluginCypress.configs.recommended, // Apply Cypress recommended rules
+  {
+    plugins: {
+      cypress: pluginCypress, // Correctly define Cypress plugin here
+    },
+    extends: ["plugin:cypress/recommended"], // Apply Cypress recommended rules
+  },
 ];
