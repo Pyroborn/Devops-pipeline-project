@@ -10,7 +10,7 @@ Welcome to the frontend of Todo app project. This part of the application is bui
 npm install
 ```
 
-#### Compile and Hot-Reload for Developmen
+#### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
