@@ -1,10 +1,7 @@
 // tests/todo.spec.js
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach, vi, flushPromises } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import App from '@/App.vue'
-import axios from 'axios'
-
-vi.mock('axios')
 
 describe('To Do List', () => {
   let wrapper

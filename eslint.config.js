@@ -5,36 +5,67 @@ import pluginCypress from "eslint-plugin-cypress";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  {
+// Global settings for all JavaScript and Vue files
+{
     files: ["**/*.{js,mjs,cjs,vue}"],
+    ignores: ["**/node_modules/**", "dist/**", "coverage/**", "**/.git/**"],
     languageOptions: {
-      globals: {
-        ...globals.browser,  // Includes browser-specific globals like `window`, `document`, etc.
-        ...pluginCypress.configs.recommended.globals, // Include Cypress globals like `cy`, `Cypress`, etc.
-      },
+        globals: {
+            ...globals.browser,
+        },
     },
-  },
-  pluginJs.configs.recommended, // Using the recommended configuration from ESLint plugin for JavaScript
-  ...pluginVue.configs["flat/essential"], // Using Vue's essential configuration
-  {
-    files: ["cypress/**/*.js"],  // Apply these settings to Cypress test files
     plugins: {
-      cypress: pluginCypress, // Correctly define Cypress plugin here
+        vue: pluginVue,
+    },
+},
+// JavaScript recommended configuration
+pluginJs.configs.recommended,
+// Vue essential configuration
+...pluginVue.configs["flat/essential"],
+// Cypress test files configuration
+// Test files configuration (Vitest)
+{
+    files: ["**/*.{spec,test}.{js,mjs,cjs,vue}"],
+    languageOptions: {
+        globals: {
+            ...globals.node,
+            ...globals.jest,
+            describe: "readonly",
+            it: "readonly",
+            test: "readonly",
+            expect: "readonly",
+            beforeEach: "readonly",
+            afterEach: "readonly",
+            beforeAll: "readonly",
+            afterAll: "readonly",
+            vi: "readonly",
+        },
+    },
+},
+// Cypress test files configuration
+{
+    files: ["cypress/**/*.{js,jsx,ts,tsx}", "cypress.config.js", "**/*.cy.{js,jsx,ts,tsx}"],
+    plugins: {
+        cypress: pluginCypress,
     },
     languageOptions: {
-      globals: {
-        ...globals.browser, // Browser globals
-        ...pluginCypress.configs.recommended.globals, // Cypress globals
-      },
+        globals: {
+            ...globals.node,
+            ...globals.browser,
+            cy: "readonly",
+            Cypress: "readonly",
+            assert: "readonly",
+            expect: "readonly",
+            describe: "readonly",
+            it: "readonly",
+            beforeEach: "readonly",
+            afterEach: "readonly",
+        },
     },
     rules: {
-      // You can override or add specific rules for Cypress tests here
+        ...pluginCypress.configs.recommended.rules,
+        "cypress/no-unnecessary-waiting": "error",
+        "cypress/assertion-before-screenshot": "warn",
     },
-  },
-  {
-    plugins: {
-      cypress: pluginCypress, // Correctly define Cypress plugin here
-    },
-    extends: ["plugin:cypress/recommended"], // Apply Cypress recommended rules
-  },
+}
 ];
