@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    environment {
+	IMAGE_NAME = 'vue-app'
+	PORT = '5000'
+}
     stages {
         stage('Clean-up and Check-out Stage') {
             steps {
@@ -40,5 +45,36 @@ pipeline {
                 }
             }
         }
-        }
+	stage('Build Docker Image') {
+	    steps {
+		script {
+		     echo "Building the image"
+		     sh 'docker build -t $IMAGE_NAME .'
+		}
+	    }
+	}
+	stage('Run Container') {
+	steps {
+		script {
+			echo "Running Container"
+			sh "docker run -d -p $PORT:$PORT $IMAGE_NAME"
+		}
+	    }
+	}
+	stage('Clean-up') {
+	    steps {
+		script {
+		    echo 'Cleaning containers"
+		    sh "docker ps -a -q --filter ancestor=$IMAGE_NAME | xargs -r docker stop | xargs -r docker rm"
+		}
+	    }
+	}
+}
+	post {
+	   always {
+		echo 'Cleaning up images'
+		sh "docker rmi -f $IMAGE_NAME"
+		}
+	    }
+	
 }
