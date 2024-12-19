@@ -64,7 +64,7 @@ pipeline {
 	stage('Clean-up') {
 	    steps {
 		script {
-		    echo 'Cleaning containers"
+		    echo 'Cleaning containers'
 		    sh "docker ps -a -q --filter ancestor=$IMAGE_NAME | xargs -r docker stop | xargs -r docker rm"
 		}
 	    }
