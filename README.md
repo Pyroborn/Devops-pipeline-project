@@ -4,7 +4,7 @@ Welcome to the frontend of Todo app project. This part of the application is bui
 
 ## Vue
 
-### Project Setup
+### Project Setu
 
 ```sh
 npm install
